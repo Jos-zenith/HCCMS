@@ -15,11 +15,21 @@ const globalForDb = globalThis as unknown as { __hccmsDb?: Promise<Executor> }
 async function connect(): Promise<Executor> {
   const schema = readFileSync(path.join(process.cwd(), "db", "schema.sql"), "utf8")
 
-  if (process.env.DATABASE_URL) {
+  const url = process.env.DATABASE_URL?.trim()
+  if (url) {
+    if (!/^postgres(ql)?:\/\/.+@.+/.test(url)) {
+      throw new Error(
+        "DATABASE_URL must be a full connection string such as " +
+          "postgresql://USER:PASSWORD@HOST:5432/postgres (in Supabase: Project Settings → Database → Connection string). " +
+          `The current value (${url.length} characters, starting "${url.slice(0, 4)}…") is not one.`
+      )
+    }
     const { default: postgres } = await import("postgres")
-    const sql = postgres(process.env.DATABASE_URL, {
+    const sql = postgres(url, {
       max: Number(process.env.DATABASE_POOL_SIZE ?? 5),
       ssl: process.env.DATABASE_SSL === "false" ? false : "prefer",
+      // Transaction-mode poolers (Supabase port 6543, PgBouncer) don't support prepared statements
+      prepare: false,
       onnotice: () => {},
     })
     await sql.unsafe(schema)
