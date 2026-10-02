@@ -85,3 +85,62 @@
     scroll-behavior: auto;
   }
 }
+
+/* ---- Landing page ---- */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, hsl(var(--primary)) var(--pct, 50%), hsl(var(--muted)) var(--pct, 50%));
+  cursor: pointer;
+}
+.range:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 4px;
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 999px;
+  background: hsl(var(--foreground));
+  border: 3px solid hsl(var(--primary));
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.2);
+}
+.range::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 999px;
+  background: hsl(var(--foreground));
+  border: 3px solid hsl(var(--primary));
+}
+
+@keyframes tree-pop {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.tree-pop {
+  animation: tree-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: bottom center;
+}
+
+@keyframes flow-dash {
+  to { stroke-dashoffset: -28; }
+}
+.flow-dash {
+  animation: flow-dash 1.2s linear infinite;
+}
+
+/* Warming stripes: Chennai LST 1991 -> 2021 */
+.heat-stripes {
+  background: linear-gradient(90deg,
+    hsl(200 70% 35%), hsl(190 60% 42%), hsl(160 45% 45%), hsl(60 70% 50%),
+    hsl(42 92% 55%), hsl(25 90% 52%), hsl(8 85% 50%), hsl(350 80% 42%));
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-slow { animation: float-slow 6s ease-in-out infinite; }

@@ -12,7 +12,7 @@ export function SiteHeader({ nav, right }: { nav?: { href: string; label: string
           </span>
           <span className="leading-tight">
             <span className="block font-semibold tracking-tight">HCCMS</span>
-            <span className="hidden text-[11px] text-muted-foreground sm:block">Household Carbon Credits</span>
+            <span className="hidden text-[11px] text-muted-foreground sm:block">Household net-zero tracker</span>
           </span>
         </Link>
         {nav && (

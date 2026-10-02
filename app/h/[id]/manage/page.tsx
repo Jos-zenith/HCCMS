@@ -54,9 +54,9 @@ export default function ManagePage({ params }: { params: Promise<{ id: string }>
         ) : (
           <>
             {isNew && <NewHouseholdKey householdKey={key} />}
-            <Devices id={id} hk={key} data={data} reload={reload} />
-            <TreesManager id={id} hk={key} data={data} reload={reload} />
             <Activities id={id} hk={key} data={data} reload={reload} />
+            <TreesManager id={id} hk={key} data={data} reload={reload} />
+            <Devices id={id} hk={key} data={data} reload={reload} />
             <div className="flex justify-end">
               <Button variant="ghost" onClick={clear}>
                 <KeyRound className="h-4 w-4" /> Forget key on this browser
@@ -161,7 +161,7 @@ function Devices({ id, hk, data, reload }: SectionProps) {
 
   return (
     <Panel id="devices">
-      <PanelTitle eyebrow="Hardware" title="Sensor modules" />
+      <PanelTitle eyebrow="Optional hardware" title="Sensor modules" />
       {data.devices.length > 0 && (
         <ul className="mb-5 divide-y divide-border rounded-xl border border-border">
           {data.devices.map((d) => (

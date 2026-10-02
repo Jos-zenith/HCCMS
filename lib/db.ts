@@ -32,7 +32,19 @@ async function connect(): Promise<Executor> {
       prepare: false,
       onnotice: () => {},
     })
-    await sql.unsafe(schema)
+    try {
+      await sql.unsafe(schema)
+    } catch (err) {
+      const e = err as NodeJS.ErrnoException & { hostname?: string }
+      if (e.code === "ENOTFOUND" && /^db\.[a-z0-9]+\.supabase\.co$/.test(e.hostname ?? "")) {
+        throw new Error(
+          `Cannot resolve ${e.hostname}: Supabase direct connections are IPv6-only and this host has no IPv6. ` +
+            "Use the pooler connection string instead (Supabase → Connect → Transaction pooler), e.g. " +
+            "postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres"
+        )
+      }
+      throw err
+    }
     return async (text, params) =>
       (await sql.unsafe(text, params as never[])) as unknown as Row[]
   }
