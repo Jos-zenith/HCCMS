@@ -1,41 +1,19 @@
 #!/bin/bash
+# Smoke-test a running HCCMS deployment: database, inference server, and a real ingest round-trip.
+#   APP_URL=https://your-app.example DEVICE_KEY=dev_xxx ./test-deployment.sh
 
-echo "=========================================="
-echo "HCCMS Deployment Verification Test"
-echo "=========================================="
-echo ""
+APP_URL="${APP_URL:-http://localhost:3000}"
 
-# Get Supabase URL from environment
-SUPABASE_URL="${SUPABASE_URL:-https://your-project-id.supabase.co}"
+echo "== Health: $APP_URL/api/health"
+curl -s "$APP_URL/api/health"; echo; echo
 
-echo "Testing Edge Function: receive-sensor-data"
-echo "URL: $SUPABASE_URL/functions/v1/receive-sensor-data"
-echo ""
-
-# Test sensor data submission
-curl -X POST "$SUPABASE_URL/functions/v1/receive-sensor-data" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "device_id": "device_001",
-    "api_key": "test_api_key_12345",
-    "temperature": 25.5,
-    "humidity": 65.0,
-    "soil_moisture": 75.0,
-    "light_intensity": 85.0,
-    "battery": 95,
-    "rssi": -45
-  }'
-
-echo ""
-echo ""
-echo "=========================================="
-echo "Test Complete!"
-echo "=========================================="
-echo ""
-echo "If you see a success message above, your deployment is working!"
-echo ""
-echo "Next steps:"
-echo "1. Get your Supabase credentials from: https://supabase.com/dashboard"
-echo "2. Update .env file with your credentials"
-echo "3. Deploy frontend to hosting service"
-echo "4. Update Arduino code with Supabase URL"
+if [ -n "$DEVICE_KEY" ]; then
+  echo "== Posting one reading with DEVICE_KEY"
+  curl -s -X POST "$APP_URL/api/ingest" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $DEVICE_KEY" \
+    -d "{\"ts\": $(date +%s), \"temperature\": 30.5, \"humidity\": 65}"
+  echo
+else
+  echo "(Set DEVICE_KEY to a key from the Manage page to test ingestion.)"
+fi

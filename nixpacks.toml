@@ -1,0 +1,3 @@
+# The repo also contains the Next.js dashboard (package.json); force Railway/Nixpacks
+# to build the Python inference server.
+providers = ["python"]

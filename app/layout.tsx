@@ -1,25 +1,16 @@
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-})
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-})
-
 export const metadata: Metadata = {
-  title: "Victori - Carbon Credit Score Calculator",
+  title: "HCCMS - Household Carbon Credit Monitoring",
   description:
     "Real-time IoT-powered carbon credit scoring with ESP32 sensor integration, Chave equation biomass estimation, and tree identification.",
 }
 
 export const viewport: Viewport = {
-  themeColor: "#091a0f",
+  themeColor: "#07130c",
   width: "device-width",
   initialScale: 1,
 }
@@ -30,12 +21,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="en" className={`dark ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   )
 }

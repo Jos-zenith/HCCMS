@@ -1,3 +1,32 @@
+# dependencies
 node_modules/
-.env*.pth
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env
+.env
+.env.local
+.env.*.local
+
+# Embedded database (PGlite)
+.data/
+
+# Large binaries
+docs/*.pdf
+
+# ML weights / datasets (too large for git)
+*.pth
+*.pt
+victori/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
 .DS_Store

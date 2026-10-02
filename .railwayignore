@@ -19,3 +19,9 @@ victori/public/
 victori/src/
 victori/node_modules/
 .DS_Store
+package.json
+package-lock.json
+.next/
+app/
+components/
+lib/

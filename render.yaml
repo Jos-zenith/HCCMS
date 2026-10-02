@@ -6,7 +6,7 @@ services:
     pythonVersion: 3.11
     plan: free
     buildCommand: python3 -m pip install -r requirements.txt
-    startCommand: python3 victori/functions/inference_server.py
+    startCommand: python3 inference/inference_server.py
     envVars:
       - key: FLASK_ENV
         value: production

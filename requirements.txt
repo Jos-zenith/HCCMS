@@ -1,4 +1,4 @@
-# Python dependencies for victori Flask inference server
+# Python dependencies for the HCCMS inference server (inference/)
 # CPU-only PyTorch to reduce image size (Railway 4GB limit)
 --extra-index-url https://download.pytorch.org/whl/cpu
 Flask==3.1.2
@@ -6,3 +6,4 @@ Flask-CORS==6.0.2
 torch==2.2.2+cpu
 torchvision==0.17.2+cpu
 Pillow==10.4.0
+numpy<2  # torch 2.2 wheels are built against NumPy 1.x
