@@ -27,6 +27,12 @@ async function connect(): Promise<Executor> {
       (await sql.unsafe(text, params as never[])) as unknown as Row[]
   }
 
+  if (process.env.VERCEL) {
+    throw new Error(
+      "DATABASE_URL is required on Vercel. Configure a managed PostgreSQL database in the project's environment variables and redeploy."
+    )
+  }
+
   const { PGlite } = await import("@electric-sql/pglite")
   const dir = process.env.PGLITE_DIR ?? path.join(process.cwd(), ".data", "pglite")
   mkdirSync(dir, { recursive: true })

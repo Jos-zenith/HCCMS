@@ -145,6 +145,16 @@ What this module can and cannot do:
 | ML inference | Python, Flask, PyTorch (CPU), Pillow, NumPy |
 | Species model | ResNet50 trained on BarkVisionAI bark images: 13 species, 88.3% validation accuracy |
 
+### Deploying on Vercel
+
+Vercel deployments require a managed PostgreSQL database because serverless
+function filesystems are not persistent or writable for the embedded PGlite
+database. Set `DATABASE_URL` in the Vercel project's Environment Variables to
+the database connection string, enable it for the environments you deploy
+(Production, Preview, and/or Development), and redeploy. The schema is applied
+automatically when the app connects. Use embedded PGlite only on a
+single-server deployment with persistent disk.
+
 ### Repository layout
 
 | Path | Contents |
